@@ -48,18 +48,6 @@ export default function Contact() {
     setErrors({ ...errors, [e.target.name]: "" });
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const newErrors = {};
-    if (!form.name.trim()) newErrors.name = "Name is required.";
-    if (!form.email.trim()) newErrors.email = "Email is required.";
-    if (!form.message.trim()) newErrors.message = "Message is required.";
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length === 0) {
-      e.target.submit();
-    }
-  }
-
   return (
     <section
       id="contact"
@@ -80,13 +68,11 @@ export default function Contact() {
           </h3>
           <form
             name="contact"
-            action="/contact"
+            action="https://formspree.io/f/xovnveoy"
             autoComplete="off"
             className="mt-10 font-grotesk"
             method="POST"
-            onSubmit={handleSubmit}
           >
-            <input type="hidden" name="form-name" value="contact" />
             <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2">
               <div className="relative z-0">
                 <input

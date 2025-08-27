@@ -8,6 +8,7 @@ A modern, responsive portfolio website built with React, Vite, and Tailwind CSS.
 - Vite
 - Tailwind CSS
 - GSAP
-- Netlify
+
+## ⚠️ still under development, making improvements slowly 
 
 ### Made with 🧡 by zeeshan
