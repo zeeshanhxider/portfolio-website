@@ -12,13 +12,13 @@
 
   
   ::-moz-selection {
-    background: #D1D1C7
+    background: #7cfc00
   }
   ::-webkit-selection {
-    background: #D1D1C7
+    background: #7cfc00
   }
   ::selection {
-    background: #D1D1C7
+    background: #7cfc00
   }
 
   .text-smooth {

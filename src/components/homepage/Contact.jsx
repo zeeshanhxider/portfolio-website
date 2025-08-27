@@ -6,6 +6,8 @@ import Heading from "../ui/Heading";
 
 export default function Contact() {
   const [time, setTime] = useState(new Date().toLocaleTimeString());
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [errors, setErrors] = useState({});
 
   const heading = useRef(null);
   const body = useRef(null);
@@ -39,7 +41,24 @@ export default function Contact() {
     setInterval(() => {
       setTime(new Date().toLocaleTimeString());
     }, 1000);
-  });
+  }, []);
+
+  function handleChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const newErrors = {};
+    if (!form.name.trim()) newErrors.name = "Name is required.";
+    if (!form.email.trim()) newErrors.email = "Email is required.";
+    if (!form.message.trim()) newErrors.message = "Message is required.";
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length === 0) {
+      e.target.submit();
+    }
+  }
 
   return (
     <section
@@ -65,15 +84,17 @@ export default function Contact() {
             autoComplete="off"
             className="mt-10 font-grotesk"
             method="POST"
+            onSubmit={handleSubmit}
           >
             <input type="hidden" name="form-name" value="contact" />
             <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2">
               <div className="relative z-0">
                 <input
-                  required
                   type="text"
                   id="name"
                   name="name"
+                  value={form.name}
+                  onChange={handleChange}
                   className="peer block w-full appearance-none border-0 border-b border-accent-100 bg-transparent px-0 py-2.5 focus:outline-none focus:ring-0"
                   placeholder=" "
                 />
@@ -83,13 +104,19 @@ export default function Contact() {
                 >
                   Your name
                 </label>
+                {errors.name && (
+                  <span className="absolute -bottom-6 left-0 text-sm text-red-500">
+                    {errors.name}
+                  </span>
+                )}
               </div>
               <div className="relative z-0">
                 <input
-                  required
                   type="text"
                   name="email"
                   id="email"
+                  value={form.email}
+                  onChange={handleChange}
                   className="peer block w-full appearance-none border-0 border-b border-accent-100 bg-transparent px-0 py-2.5 focus:outline-none focus:ring-0"
                   placeholder=" "
                 />
@@ -99,13 +126,19 @@ export default function Contact() {
                 >
                   Your email
                 </label>
+                {errors.email && (
+                  <span className="absolute -bottom-6 left-0 text-sm text-red-500">
+                    {errors.email}
+                  </span>
+                )}
               </div>
               <div className="relative z-0 sm:col-span-2">
                 <textarea
-                  required
                   id="message"
                   name="message"
                   rows="5"
+                  value={form.message}
+                  onChange={handleChange}
                   className="peer block w-full appearance-none border-0 border-b border-accent-100 bg-transparent px-0 py-2.5 focus:outline-none focus:ring-0"
                   placeholder=" "
                 ></textarea>
@@ -115,6 +148,11 @@ export default function Contact() {
                 >
                   Your message
                 </label>
+                {errors.message && (
+                  <span className="absolute -bottom-6 left-0 text-sm text-red-500">
+                    {errors.message}
+                  </span>
+                )}
               </div>
             </div>
             <button
@@ -147,9 +185,7 @@ export default function Contact() {
             </div>
           </div>
           <div className="space-y-3 ">
-            <h4 className="text-body-1 font-semibold 2xl:text-4xl">
-              Socials
-            </h4>
+            <h4 className="text-body-1 font-semibold 2xl:text-4xl">Socials</h4>
             <div className="space-y-3 text-body-2 2xl:text-3xl">
               <a
                 href="https://github.com/zeeshanhxider"

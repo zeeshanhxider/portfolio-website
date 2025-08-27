@@ -70,18 +70,6 @@ export default function Hero() {
         ref={imgContainer}
         className="absolute mx-auto  w-[55%] overflow-hidden rounded-md"
       ></div>
-      <div
-        ref={scroll}
-        className="absolute bottom-12 right-0 flex flex-col items-center justify-center space-y-8"
-      >
-        <span className=" rotate-90 text-body-3">scroll</span>
-        <div className="relative h-1 w-10 rotate-90 overflow-hidden">
-          <span
-            ref={scrollLine}
-            className="absolute h-[0.08em] w-10 translate-x-10 bg-accent-300"
-          ></span>
-        </div>
-      </div>
     </section>
   );
 }
