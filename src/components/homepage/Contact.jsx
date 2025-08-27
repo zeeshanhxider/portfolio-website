@@ -8,6 +8,8 @@ export default function Contact() {
   const [time, setTime] = useState(new Date().toLocaleTimeString());
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState({});
+  const [success, setSuccess] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const heading = useRef(null);
   const body = useRef(null);
@@ -48,6 +50,47 @@ export default function Contact() {
     setErrors({ ...errors, [e.target.name]: "" });
   }
 
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const newErrors = {};
+    if (!form.name.trim()) newErrors.name = "Name is required.";
+    if (!form.email.trim()) newErrors.email = "Email is required.";
+    else if (!validateEmail(form.email))
+      newErrors.email = "Please enter a valid email address.";
+    if (!form.message.trim()) newErrors.message = "Message is required.";
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) {
+      setTimeout(() => setErrors({}), 5000);
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const response = await fetch("https://formspree.io/f/xovnveoy", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+      if (response.ok) {
+        setSuccess(true);
+        setForm({ name: "", email: "", message: "" });
+        setTimeout(() => setSuccess(false), 5000);
+      } else {
+        setSuccess(false);
+      }
+    } catch (err) {
+      setSuccess(false);
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return (
     <section
       id="contact"
@@ -68,10 +111,10 @@ export default function Contact() {
           </h3>
           <form
             name="contact"
-            action="https://formspree.io/f/xovnveoy"
             autoComplete="off"
             className="mt-10 font-grotesk"
             method="POST"
+            onSubmit={handleSubmit}
           >
             <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2">
               <div className="relative z-0">
@@ -144,13 +187,19 @@ export default function Contact() {
             <button
               type="submit"
               className="button group mt-10 border duration-200 hover:border-accent-400 hover:bg-transparent"
+              disabled={submitting}
             >
               <span className="relative">
                 <span className="group-hover:text-accent-400">
-                  Send Message
+                  {submitting ? "Sending..." : "Send Message"}
                 </span>
               </span>
             </button>
+            {success && (
+              <div className="mt-4 font-semibold text-green-600">
+                Thank you! Your message has been sent.
+              </div>
+            )}
           </form>
         </div>
         <div className="col-span-2 grid grid-cols-1 gap-x-4 gap-y-8 text-accent-300 sm:grid-cols-2 sm:gap-y-0 md:grid-cols-1">
