@@ -72,6 +72,10 @@ export default function NavBar({ sectionRefs }) {
           <span>projects</span>
           <span className="absolute bottom-0 left-0 h-[0.125em] w-0 rounded-full bg-secondary-600 duration-300 ease-in-out group-hover:w-full"></span>
         </a>
+        <a href="./resume.pdf" target="_blank" rel="noopener noreferrer" className="group relative hidden md:inline-block">
+          <span>resume</span>
+          <span className="absolute bottom-0 left-0 h-[0.125em] w-0 rounded-full bg-secondary-600 duration-300 ease-in-out group-hover:w-full"></span>
+        </a>
         <a
           ref={cta}
           className="button group relative mt-10 min-w-0 border border-transparent px-4 py-1.5 duration-200 hover:border-accent-400 hover:bg-transparent"
