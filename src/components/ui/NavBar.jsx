@@ -41,21 +41,19 @@ export default function NavBar({ sectionRefs = [] }) {
           .timeline()
           .to(navBar.current, { color: "#DDDDD5" })
           .to(hamburgerRef.current, { color: "#DDDDD5" }, 0)
-          .to(".bg-secondary-100", { backgroundColor: "#0E0E0C" }, 0),
+          .to(".bg-secondary-100", { backgroundColor: "#0E0E0C" }, 0)
+          .to(".font-grotesk span", { color: "#DDDDD5" }, 0),
         toggleActions: "restart reverse restart reverse",
       });
     });
   }, [sectionRefs]);
 
-  // Handle menu toggle
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Animate overlay
   useEffect(() => {
     if (isMenuOpen) {
-      // Open animation
       gsap.set(overlayRef.current, { display: "flex" });
       gsap.fromTo(
         overlayRef.current,
@@ -74,10 +72,8 @@ export default function NavBar({ sectionRefs = [] }) {
           ease: "power2.out",
         }
       );
-      // Prevent body scroll when menu is open
       document.body.style.overflow = "hidden";
     } else {
-      // Close animation
       gsap.to(overlayRef.current, {
         opacity: 0,
         y: -20,
@@ -87,7 +83,6 @@ export default function NavBar({ sectionRefs = [] }) {
           gsap.set(overlayRef.current, { display: "none" });
         },
       });
-      // Re-enable body scroll
       document.body.style.overflow = "unset";
     }
 
@@ -113,11 +108,11 @@ export default function NavBar({ sectionRefs = [] }) {
             </h1>
           </a>
 
-          {/* Hamburger Menu (Right side on mobile) */}
+          {/* Hamburger Menu Icon */}
           <button
             ref={hamburgerRef}
             onClick={toggleMenu}
-            className="relative z-50 h-6 w-6 focus:outline-none"
+            className="relative z-50 h-6 w-6 focus:outline-none mr-3"
             aria-label="Toggle menu"
           >
             <span className="sr-only">Toggle menu</span>
@@ -203,7 +198,6 @@ export default function NavBar({ sectionRefs = [] }) {
             className="group relative inline-block text-black transition-colors hover:text-gray-600"
           >
             <span>about</span>
-            <span className="absolute bottom-0 left-0 h-[0.125em] w-0 rounded-full bg-black duration-300 ease-in-out group-hover:w-full"></span>
           </a>
           <a
             href="#services"
@@ -211,7 +205,6 @@ export default function NavBar({ sectionRefs = [] }) {
             className="group relative inline-block text-black transition-colors hover:text-gray-600"
           >
             <span>services</span>
-            <span className="absolute bottom-0 left-0 h-[0.125em] w-0 rounded-full bg-black duration-300 ease-in-out group-hover:w-full"></span>
           </a>
           <a
             href="#works"
@@ -219,7 +212,6 @@ export default function NavBar({ sectionRefs = [] }) {
             className="group relative inline-block text-black transition-colors hover:text-gray-600"
           >
             <span>projects</span>
-            <span className="absolute bottom-0 left-0 h-[0.125em] w-0 rounded-full bg-black duration-300 ease-in-out group-hover:w-full"></span>
           </a>
           <a
             href="./resume.pdf"
@@ -229,10 +221,9 @@ export default function NavBar({ sectionRefs = [] }) {
             className="group relative inline-block text-black transition-colors hover:text-gray-600"
           >
             <span>resume</span>
-            <span className="absolute bottom-0 left-0 h-[0.125em] w-0 rounded-full bg-black duration-300 ease-in-out group-hover:w-full"></span>
           </a>
           <a
-            className="button group relative mt-4 min-w-0 border border-transparent px-6 py-3 text-black duration-200 hover:border-accent-400 hover:bg-transparent"
+            className="button group relative mt-4 min-w-0 border border-transparent px-5 py-1.5 text-black duration-200 hover:border-accent-400 hover:bg-transparent"
             href="#contact"
             onClick={toggleMenu}
             style={{ backgroundColor: "#7cfc00", color: "#0e0e0c" }}
