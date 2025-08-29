@@ -39,10 +39,10 @@ export default function NavBar({ sectionRefs = [] }) {
         end: "bottom 300px",
         animation: gsap
           .timeline()
-          .to(navBar.current, { color: "#DDDDD5" })
+          .to(navBar.current, { color: "#DDDDD5" }, 0)
           .to(hamburgerRef.current, { color: "#DDDDD5" }, 0)
-          .to(".bg-secondary-100", { backgroundColor: "#0E0E0C" }, 0)
-          .to(".font-grotesk span", { color: "#DDDDD5" }, 0),
+          .to(".hb-text", { color: "#DDDDD5" }, 0)
+          .to(".bg-secondary-100", { backgroundColor: "#0E0E0C" }, 0),
         toggleActions: "restart reverse restart reverse",
       });
     });
@@ -112,7 +112,7 @@ export default function NavBar({ sectionRefs = [] }) {
           <button
             ref={hamburgerRef}
             onClick={toggleMenu}
-            className="relative z-50 h-6 w-6 focus:outline-none mr-3"
+            className="relative z-50 mr-3 h-6 w-6 focus:outline-none"
             aria-label="Toggle menu"
           >
             <span className="sr-only">Toggle menu</span>
@@ -195,21 +195,21 @@ export default function NavBar({ sectionRefs = [] }) {
           <a
             href="#about"
             onClick={toggleMenu}
-            className="group relative inline-block text-black transition-colors hover:text-gray-600"
+            className="hb-text group relative inline-block text-black transition-colors hover:text-gray-600"
           >
             <span>about</span>
           </a>
           <a
             href="#services"
             onClick={toggleMenu}
-            className="group relative inline-block text-black transition-colors hover:text-gray-600"
+            className="hb-text group relative inline-block text-black transition-colors hover:text-gray-600"
           >
             <span>services</span>
           </a>
           <a
             href="#works"
             onClick={toggleMenu}
-            className="group relative inline-block text-black transition-colors hover:text-gray-600"
+            className="hb-text group relative inline-block text-black transition-colors hover:text-gray-600"
           >
             <span>projects</span>
           </a>
@@ -218,7 +218,7 @@ export default function NavBar({ sectionRefs = [] }) {
             target="_blank"
             rel="noopener noreferrer"
             onClick={toggleMenu}
-            className="group relative inline-block text-black transition-colors hover:text-gray-600"
+            className="hb-text group relative inline-block text-black transition-colors hover:text-gray-600"
           >
             <span>resume</span>
           </a>
@@ -226,6 +226,7 @@ export default function NavBar({ sectionRefs = [] }) {
             className="button group relative mt-4 min-w-0 border border-transparent px-5 py-1.5 text-black duration-200 hover:border-accent-400 hover:bg-transparent"
             href="#contact"
             onClick={toggleMenu}
+            ref={cta}
             style={{ backgroundColor: "#7cfc00", color: "#0e0e0c" }}
           >
             <span className="relative w-fit">
