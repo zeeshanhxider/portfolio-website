@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import Lenis from "@studio-freight/lenis";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import NavBarSVG from "./NavbarSVG";
+import { Squash as Hamburger } from 'hamburger-react'
 
 export default function NavBar({ sectionRefs = [] }) {
   const navBar = useRef(null);
@@ -95,7 +96,7 @@ export default function NavBar({ sectionRefs = [] }) {
     <>
       <header
         ref={navBar}
-        className="fixed top-0 z-50 flex w-full -translate-y-full items-center justify-between bg-secondary-100 px-5 py-3"
+        className="fixed top-0 z-50 flex w-full -translate-y-full items-center justify-between bg-secondary-100 px-4 py-3"
       >
         {/* Mobile Layout */}
         <div className="flex w-full items-center justify-between md:hidden">
@@ -110,29 +111,18 @@ export default function NavBar({ sectionRefs = [] }) {
 
           {/* Hamburger Menu Icon */}
           <button
-            ref={hamburgerRef}
-            onClick={toggleMenu}
-            className="relative z-50 mr-3 h-6 w-6 focus:outline-none"
             aria-label="Toggle menu"
+            className="relative z-50 focus:outline-none hamburger-sync translate-x-1"
+            onClick={toggleMenu}
+            ref={hamburgerRef}
           >
-            <span className="sr-only">Toggle menu</span>
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-              <span
-                className={`absolute block h-0.5 w-6 transform bg-current transition-all duration-300 ease-in-out ${
-                  isMenuOpen ? "rotate-45" : "-translate-y-2"
-                }`}
-              ></span>
-              <span
-                className={`absolute block h-0.5 w-6 transform bg-current transition-all duration-300 ease-in-out ${
-                  isMenuOpen ? "opacity-0" : ""
-                }`}
-              ></span>
-              <span
-                className={`absolute block h-0.5 w-6 transform bg-current transition-all duration-300 ease-in-out ${
-                  isMenuOpen ? "-rotate-45" : "translate-y-2"
-                }`}
-              ></span>
-            </div>
+            <Hamburger
+              toggled={isMenuOpen}
+              toggle={setIsMenuOpen}
+              size={24}
+              duration={0.4}
+              color="currentColor"
+            />
           </button>
         </div>
 
