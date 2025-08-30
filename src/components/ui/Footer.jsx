@@ -1,21 +1,54 @@
+import { useEffect, useRef } from "react";
+import Lenis from "@studio-freight/lenis";
+
 export default function Footer() {
-  function toTop() {
-    window.scrollTo(0, 0)
-  }
+  const lenisRef = useRef(null);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    lenisRef.current = lenis;
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, {
+        duration: 1.5, 
+        easing: (t) => 1 - Math.pow(1 - t, 3), 
+      });
+    }
+  };
 
   return (
     <footer className="mt-14 flex items-end justify-between px-5 py-4 sm:flex text-body-4 md:text-body-3">
       <div className="flex flex-col md:flex-row md:w-[62.5vw] lg:w-[57.5vw] justify-between">
-        <div className="flex space-x-1" >
+        <div className="flex space-x-1">
           <span>&copy;</span>
           <span>2025</span>
           <span className="font-extrabold uppercase 2xl:text-body-1">zeeshan</span>
         </div>
         <div>
-          <span className=" font-urdu text-body-4 2xl:text-body-1 pr-20">سر نیچے کام اوپر</span>
+          <span className="font-urdu text-body-4 2xl:text-body-1 pr-20">سر نیچے کام اوپر</span>
         </div>
       </div>
-      <button onClick={toTop} className="col-span-2 flex items-center space-x-2 w-fit group 2xl:text-body-1">
+      <button 
+        onClick={scrollToTop} 
+        className="col-span-2 flex items-center space-x-2 w-fit group 2xl:text-body-1"
+      >
         <span className="font-extrabold uppercase hover:font-black duration-200">BACK TO TOP</span>
         <span className="group-hover:-translate-y-3 duration-300 ease-in-out">
           <svg
