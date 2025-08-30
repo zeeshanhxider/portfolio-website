@@ -3,24 +3,37 @@ import { gsap } from "gsap";
 import Lenis from "@studio-freight/lenis";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import NavBarSVG from "./NavbarSVG";
-import { Squash as Hamburger } from 'hamburger-react'
+import { Squash as Hamburger } from "hamburger-react";
 
 export default function NavBar({ sectionRefs = [] }) {
   const navBar = useRef(null);
   const cta = useRef(null);
   const overlayRef = useRef(null);
   const hamburgerRef = useRef(null);
+  const lenisRef = useRef(null); // Store Lenis instance
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const tl = gsap.timeline();
   gsap.registerPlugin(ScrollTrigger);
 
   useEffect(() => {
-    const lenis = new Lenis();
+    const lenis = new Lenis({
+      duration: 1.2, 
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+      smoothWheel: true,
+      smoothTouch: true, 
+    });
+    
+    lenisRef.current = lenis; 
+    
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
   }, []);
 
   useEffect(() => {
@@ -51,6 +64,26 @@ export default function NavBar({ sectionRefs = [] }) {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleSmoothScroll = (e, targetId) => {
+    e.preventDefault();
+    
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+
+    const targetElement = document.querySelector(targetId);
+    if (targetElement && lenisRef.current) {
+      const navbarHeight = navBar.current?.offsetHeight || 60;
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+
+      lenisRef.current.scrollTo(offsetPosition, {
+        duration: 1.5, 
+        easing: (t) => 1 - Math.pow(1 - t, 3), 
+      });
+    }
   };
 
   useEffect(() => {
@@ -96,11 +129,16 @@ export default function NavBar({ sectionRefs = [] }) {
     <>
       <header
         ref={navBar}
-        className="fixed top-0 z-50 flex w-full -translate-y-full items-center justify-between bg-secondary-100 px-4 py-3"
+        className="fixed top-0 z-50 flex w-full -translate-y-full items-center justify-between bg-secondary-100 px-4 py-1 md:py-3"
       >
         {/* Mobile Layout */}
         <div className="flex w-full items-center justify-between md:hidden">
-          <a href="#hero" aria-label="Logo" className="z-50">
+          <a 
+            href="#hero" 
+            aria-label="Logo" 
+            className="z-50"
+            onClick={(e) => handleSmoothScroll(e, "#hero")}
+          >
             <h1 className="font flex items-center text-lg font-semibold">
               zeeshans resume{" "}
               <span className="ml-1.5">
@@ -112,7 +150,7 @@ export default function NavBar({ sectionRefs = [] }) {
           {/* Hamburger Menu Icon */}
           <button
             aria-label="Toggle menu"
-            className="relative z-50 focus:outline-none hamburger-sync translate-x-1"
+            className="hamburger-sync relative z-50 translate-x-1 focus:outline-none"
             onClick={toggleMenu}
             ref={hamburgerRef}
           >
@@ -128,7 +166,12 @@ export default function NavBar({ sectionRefs = [] }) {
 
         {/* Desktop Layout */}
         <div className="hidden w-full items-center justify-between md:flex">
-          <a href="#hero" aria-label="Logo" className="z-50">
+          <a 
+            href="#hero" 
+            aria-label="Logo" 
+            className="z-50"
+            onClick={(e) => handleSmoothScroll(e, "#hero")}
+          >
             <h1 className="font flex items-center text-lg font-semibold">
               zeeshans resume{" "}
               <span className="ml-1.5">
@@ -137,18 +180,27 @@ export default function NavBar({ sectionRefs = [] }) {
             </h1>
           </a>
           <nav className=" space-x-7 font-grotesk text-body-3 sm:block">
-            <a href="#about" className="group relative hidden md:inline-block">
+            <a 
+              href="#about" 
+              className="group relative hidden md:inline-block"
+              onClick={(e) => handleSmoothScroll(e, "#about")}
+            >
               <span>about</span>
               <span className="absolute bottom-0 left-0 h-[0.125em] w-0 rounded-full bg-secondary-600 duration-300 ease-in-out group-hover:w-full"></span>
             </a>
             <a
               href="#services"
               className="group relative hidden md:inline-block"
+              onClick={(e) => handleSmoothScroll(e, "#services")}
             >
               <span>services</span>
               <span className="absolute bottom-0 left-0 h-[0.125em] w-0 rounded-full bg-secondary-600 duration-300 ease-in-out group-hover:w-full"></span>
             </a>
-            <a href="#works" className="group relative hidden md:inline-block">
+            <a 
+              href="#works" 
+              className="group relative hidden md:inline-block"
+              onClick={(e) => handleSmoothScroll(e, "#works")}
+            >
               <span>projects</span>
               <span className="absolute bottom-0 left-0 h-[0.125em] w-0 rounded-full bg-secondary-600 duration-300 ease-in-out group-hover:w-full"></span>
             </a>
@@ -165,6 +217,7 @@ export default function NavBar({ sectionRefs = [] }) {
               ref={cta}
               className="button group relative mt-10 min-w-0 border border-transparent px-4 py-1.5 duration-200 hover:border-accent-400 hover:bg-transparent"
               href="#contact"
+              onClick={(e) => handleSmoothScroll(e, "#contact")}
               style={{ backgroundColor: "#7cfc00", color: "#0e0e0c" }}
             >
               <span className="relative w-fit">
@@ -182,24 +235,24 @@ export default function NavBar({ sectionRefs = [] }) {
         style={{ display: "none" }}
       >
         <nav className="flex flex-col items-center space-y-8 font-grotesk text-2xl">
-          <a
-            href="#about"
-            onClick={toggleMenu}
-            className="hb-text group relative inline-block text-black transition-colors hover:text-gray-600"
+          <a 
+            href="#about" 
+            onClick={(e) => handleSmoothScroll(e, "#about")} 
+            className="hb-text"
           >
             <span>about</span>
           </a>
-          <a
-            href="#services"
-            onClick={toggleMenu}
-            className="hb-text group relative inline-block text-black transition-colors hover:text-gray-600"
+          <a 
+            href="#services" 
+            onClick={(e) => handleSmoothScroll(e, "#services")} 
+            className="hb-text"
           >
             <span>services</span>
           </a>
-          <a
-            href="#works"
-            onClick={toggleMenu}
-            className="hb-text group relative inline-block text-black transition-colors hover:text-gray-600"
+          <a 
+            href="#works" 
+            onClick={(e) => handleSmoothScroll(e, "#works")} 
+            className="hb-text"
           >
             <span>projects</span>
           </a>
@@ -207,15 +260,15 @@ export default function NavBar({ sectionRefs = [] }) {
             href="./resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={toggleMenu}
-            className="hb-text group relative inline-block text-black transition-colors hover:text-gray-600"
+            onClick={() => setIsMenuOpen(false)}
+            className="hb-text"
           >
             <span>resume</span>
           </a>
           <a
             className="button group relative mt-4 min-w-0 border border-transparent px-5 py-1.5 text-black duration-200 hover:border-accent-400 hover:bg-transparent"
             href="#contact"
-            onClick={toggleMenu}
+            onClick={(e) => handleSmoothScroll(e, "#contact")}
             ref={cta}
             style={{ backgroundColor: "#7cfc00", color: "#0e0e0c" }}
           >
