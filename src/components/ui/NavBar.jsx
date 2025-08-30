@@ -103,7 +103,7 @@ export default function NavBar({ sectionRefs = [] }) {
           <a href="#hero" aria-label="Logo" className="z-50">
             <h1 className="font flex items-center text-lg font-semibold">
               zeeshans resume{" "}
-              <span className="ml-2">
+              <span className="ml-1.5">
                 <NavBarSVG />
               </span>
             </h1>
@@ -131,7 +131,7 @@ export default function NavBar({ sectionRefs = [] }) {
           <a href="#hero" aria-label="Logo" className="z-50">
             <h1 className="font flex items-center text-lg font-semibold">
               zeeshans resume{" "}
-              <span className="ml-2">
+              <span className="ml-1.5">
                 <NavBarSVG />
               </span>
             </h1>
