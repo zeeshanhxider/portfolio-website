@@ -33,7 +33,7 @@ export default function About() {
   }, [aboutSection]);
 
   return (
-    <section ref={aboutSection} aria-label="about me">
+    <section ref={aboutSection} aria-label="about me" className="py-10">
       <Heading title="about me" />
       <div className="mt-10 flex flex-col items-start gap-8 md:flex-row lg:gap-10 ">
         <div className="top-28 overflow-hidden rounded-md md:sticky md:w-1/2">
@@ -59,34 +59,25 @@ export default function About() {
               ref={body}
               className=" translate-y-10 text-body-1 opacity-0 2xl:text-4xl"
             >
-              Hi, I&apos;m zeeshan 👋🏼 — a Software Engineering student at NUST
-              and an aspiring AI Engineer with a passion for turning ideas into
-              real-world solutions. Alongside my degree, I&apos;m also part of
-              AIESEC in Business Development, where I get to grow my teamwork,
-              communication, and leadership skills outside of the classroom.
-              <br></br>
-              <br></br>
-              My main focus is in the field of Large Language Models (LLMs),
-              where I&apos;m actively exploring Retrieval-Augmented Generation
-              (RAG) and multimodal RAG systems. I love working on how AI can
-              combine reasoning with external knowledge to become more reliable
-              and useful in real-world applications. Beyond research, I focus on
-              building production-ready, end-to-end applications that are
-              designed with real users in mind — applying concepts from DevOps
-              to ensure scalability, reliability, and smooth deployment.
-              <br></br>
-              <br></br>
-              While I&apos;m comfortable across the stack, I especially enjoy
-              the frontend and UI/UX side of development, where design meets
-              functionality. I see every project as a chance to push my
-              problem-solving skills, creativity, and technical depth further.
-              <br></br>
-              <br></br>
-              Outside of coding, you&apos;ll usually find me (struggling) at the
-              gym, discovering new music, appreciating different forms of art or
-              just goofing around :)
-              <br></br>
-              <br></br>
+              Hi, I&apos;m Zeeshan 👋🏼 — a Software Engineering student at NUST
+              and aspiring AI Engineer. My main focus is on Large Language
+              Models (LLMs), particularly Retrieval-Augmented Generation (RAG)
+              and multimodal RAG systems, exploring how AI can combine reasoning
+              with external knowledge to solve real-world problems.
+              <br />
+              <br />
+              I build production-ready AI applications, emphasizing scalability,
+              reliability, and smooth deployment. While I&apos;m comfortable across
+              the stack, I also enjoy frontend and UI/UX development,
+              where design meets functionality.
+              <br />
+              <br />
+              Beyond coding, I&apos;m part of AIESEC, honing teamwork,
+              communication, and leadership skills. When not working,
+              you&apos;ll find me (struggling) at the gym, exploring music, or enjoying
+              different forms of art :)
+              <br />
+              <br />
               You can also check out my{" "}
               <a
                 className="underline duration-300 ease-in-out hover:text-secondary-600"

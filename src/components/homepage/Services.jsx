@@ -24,14 +24,12 @@ export default function Services() {
       <div className="space-y-14">
         <ServiceUi
           title="my expertises."
-          description="I focus on all things design and web related. With each of my
-          services, my goal is to deliver an impactful and elevating
-          digital experience for everyone."
+          description="I specialize in building intelligent systems powered by Large Language Models, advanced RAG pipelines, and multimodal AI. Alongside AI, I develop scalable full-stack applications, design intuitive user experiences, and apply MLOps best practices to take projects from prototypes to production"
           items={expertiseItems}
         />
         <ServiceUi
           title="my digital tool box."
-          description="These are my go to tech stack to make any projects happen. I am always eager of learning more about my current stack, and new technologies that could expand my horizons."
+          description="My toolbox includes production-ready technologies like Python and FastAPI for backend AI services, TypeScript and the MERN stack for full-stack applications, and PostgreSQL for reliable data management. I continuously sharpen my skills while exploring new tools that push the boundaries of what I can build."
           items={toolBoxItems}
         />
       </div>
