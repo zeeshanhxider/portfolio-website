@@ -9,6 +9,9 @@ A modern, responsive portfolio website built with React, Vite, and Tailwind CSS.
 - Tailwind CSS
 - GSAP
 
-## ⚠️ still under development, making improvements slowly 
+## Things to be added 
+
+- Resume in PDF format
+- Projects
 
 ### Made with 🧡 by zeeshan
